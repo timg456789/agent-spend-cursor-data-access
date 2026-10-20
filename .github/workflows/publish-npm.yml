@@ -1,6 +1,5 @@
-# Publishes to npm on semver tag push (0.1.2 or v0.1.2) or manual run.
-# Do not also use release:published — publishing a Release creates the tag and would run twice.
 # Trusted publisher: timg456789 / agent-spend-cursor-data-access / publish-npm.yml
+# setup-node sets NODE_AUTH_TOKEN from GITHUB_TOKEN when registry-url is set — unset before publish so npm uses OIDC.
 
 name: Publish to npm
 
@@ -22,14 +21,8 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      # No registry-url here — that makes setup-node inject GITHUB_TOKEN as NODE_AUTH_TOKEN,
-      # which breaks npm trusted publishing (OIDC). See npm docs: Trusted publishers.
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
-
-      # Trusted publisher: no NODE_AUTH_TOKEN / NPM_TOKEN. Validates on first green publish.
-      - name: Publish package
-        run: npm publish --provenance
