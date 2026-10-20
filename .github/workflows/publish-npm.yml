@@ -1,13 +1,5 @@
-# Publishes to npm on tag push (v*) or manual run.
-#
-# Setup (no local npm publish required):
-# 1. npmjs.com → log in (same browser is fine)
-# 2. Profile → Trusted publishing (or npm docs: "Trusted publishers")
-# 3. Add GitHub Actions publisher:
-#    - Owner: timg456789
-#    - Repository: agent-spend-cursor-data-access
-#    - Workflow: publish-npm.yml
-# 4. Push this repo to GitHub, then tag: npm version patch && git push --follow-tags
+# Publishes to npm on: tag (v0.1.1 or 0.1.1), GitHub Release published, or manual run.
+# Trusted publisher on npm: timg456789 / agent-spend-cursor-data-access / publish-npm.yml
 
 name: Publish to npm
 
@@ -15,6 +7,9 @@ on:
   push:
     tags:
       - 'v*'
+      - '*.*.*'
+  release:
+    types: [published]
   workflow_dispatch:
 
 jobs:
@@ -33,5 +28,3 @@ jobs:
 
       - name: Publish package
         run: npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
