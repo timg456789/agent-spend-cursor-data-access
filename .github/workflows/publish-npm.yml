@@ -1,0 +1,30 @@
+# Publishes to npm when you push a version tag (e.g. v0.1.1) or run manually.
+# One-time setup: GitHub repo → Settings → Secrets → Actions → NPM_TOKEN
+# (npmjs.com → Access Tokens → Generate New Token → Publish type)
+
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: https://registry.npmjs.org
+
+      - name: Publish package
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
