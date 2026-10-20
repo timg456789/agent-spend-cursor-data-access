@@ -1,5 +1,6 @@
-# Publishes to npm on: tag (v0.1.1 or 0.1.1), GitHub Release published, or manual run.
-# Trusted publisher on npm: timg456789 / agent-spend-cursor-data-access / publish-npm.yml
+# Publishes to npm on semver tag push (0.1.2 or v0.1.2) or manual run.
+# Do not also use release:published — publishing a Release creates the tag and would run twice.
+# Trusted publisher: timg456789 / agent-spend-cursor-data-access / publish-npm.yml
 
 name: Publish to npm
 
@@ -8,9 +9,11 @@ on:
     tags:
       - 'v*'
       - '*.*.*'
-  release:
-    types: [published]
   workflow_dispatch:
+
+concurrency:
+  group: npm-publish-${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   publish:
