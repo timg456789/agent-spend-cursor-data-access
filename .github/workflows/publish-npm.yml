@@ -1,5 +1,5 @@
-# Trusted publisher: timg456789 / agent-spend-cursor-data-access / publish-npm.yml
-# setup-node sets NODE_AUTH_TOKEN from GITHUB_TOKEN when registry-url is set — unset before publish so npm uses OIDC.
+# Publish with NPM_TOKEN (repo secret).
+# npm → Access Tokens (write on this package) → GitHub Settings → Secrets → NPM_TOKEN
 
 name: Publish to npm
 
@@ -26,3 +26,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
+
+      - name: Upgrade npm & Publish
+        run: |
+          npm install -g npm@latest
+          npm publish --provenance --access public
