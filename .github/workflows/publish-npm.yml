@@ -1,6 +1,13 @@
-# Publishes to npm when you push a version tag (e.g. v0.1.1) or run manually.
-# One-time setup: GitHub repo → Settings → Secrets → Actions → NPM_TOKEN
-# (npmjs.com → Access Tokens → Generate New Token → Publish type)
+# Publishes to npm on tag push (v*) or manual run.
+#
+# Setup (no local npm publish required):
+# 1. npmjs.com → log in (same browser is fine)
+# 2. Profile → Trusted publishing (or npm docs: "Trusted publishers")
+# 3. Add GitHub Actions publisher:
+#    - Owner: timg456789
+#    - Repository: agent-spend-cursor-data-access
+#    - Workflow: publish-npm.yml
+# 4. Push this repo to GitHub, then tag: npm version patch && git push --follow-tags
 
 name: Publish to npm
 
