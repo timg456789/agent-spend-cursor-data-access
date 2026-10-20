@@ -1,6 +1,6 @@
 {
   "name": "agent-spend-cursor-data-access",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Read-only access to Cursor local agent transcripts and state.vscdb — projects, composers, bubbles, token rollups. Host must inject pricingTable (default pricing.json is exported).",
   "type": "module",
   "license": "MIT",
