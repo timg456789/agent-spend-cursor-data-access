@@ -24,10 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # No registry-url here — that makes setup-node inject GITHUB_TOKEN as NODE_AUTH_TOKEN,
+      # which breaks npm trusted publishing (OIDC). See npm docs: Trusted publishers.
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          registry-url: https://registry.npmjs.org
 
+      # Trusted publisher: no NODE_AUTH_TOKEN / NPM_TOKEN. Validates on first green publish.
       - name: Publish package
         run: npm publish --provenance
